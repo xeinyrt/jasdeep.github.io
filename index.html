@@ -11,11 +11,11 @@
             --background: #0a0a0a;
             --terminal: #1a1a1a;
             --text: #f0f0f0;
-            --accent: #b399d4; /* Lavender */
-            --secondary: #d1b3ff; /* Light Lavender */
+            --accent: #b399d4;
+            --secondary: #d1b3ff;
             --error: #ff6b6b;
-            --prompt: #c9a0dc; /* Medium Lavender */
-            --highlight: #e6ccff; /* Very Light Lavender */
+            --prompt: #c9a0dc;
+            --highlight: #e6ccff;
         }
 
         body {
@@ -49,10 +49,8 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
-            25% { transform: translateY(-10px) rotateX(2deg) rotateY(1deg); }
-            50% { transform: translateY(0) rotateX(0deg) rotateY(-1deg); }
-            75% { transform: translateY(-5px) rotateX(-1deg) rotateY(0deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .terminal-header {
@@ -79,17 +77,9 @@
             transform: scale(1.2);
         }
 
-        .button-red {
-            background-color: #ff6b6b;
-        }
-
-        .button-yellow {
-            background-color: #ffd166;
-        }
-
-        .button-green {
-            background-color: #06d6a0;
-        }
+        .button-red { background-color: #ff6b6b; }
+        .button-yellow { background-color: #ffd166; }
+        .button-green { background-color: #06d6a0; }
 
         .terminal-title {
             margin-left: 12px;
@@ -104,11 +94,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            background: 
-                linear-gradient(
-                    rgba(26, 26, 26, 0.9),
-                    rgba(26, 26, 26, 0.9)
-                ),
+            background: linear-gradient(rgba(26, 26, 26, 0.9), rgba(26, 26, 26, 0.9)),
                 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23b399d4" stroke-width="0.5"/></svg>');
         }
 
@@ -116,56 +102,29 @@
             margin-bottom: 8px;
             line-height: 1.5;
             opacity: 0;
-            animation: fadeIn 0.5s forwards, glow 2s infinite alternate;
+            animation: fadeIn 0.5s forwards;
         }
 
         @keyframes fadeIn {
             to { opacity: 1; }
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 2px var(--highlight); }
-            to { text-shadow: 0 0 5px var(--secondary); }
-        }
-
-        .prompt {
-            color: var(--prompt);
-        }
-
-        .command {
-            color: var(--text);
-        }
-
-        .output {
-            color: var(--text);
-            white-space: pre-wrap;
-            margin-top: 8px;
-        }
-
-        .accent {
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .secondary {
-            color: var(--secondary);
-        }
-
-        .error {
-            color: var(--error);
-        }
+        .prompt { color: var(--prompt); }
+        .command { color: var(--text); }
+        .output { color: var(--text); white-space: pre-wrap; margin-top: 8px; }
+        .accent { color: var(--accent); font-weight: bold; }
+        .secondary { color: var(--secondary); }
+        .error { color: var(--error); }
 
         .input-line {
             display: flex;
             align-items: center;
             margin-top: 8px;
-            transform-style: preserve-3d;
         }
 
         .input-prompt {
             color: var(--prompt);
             margin-right: 8px;
-            text-shadow: 0 0 3px var(--highlight);
         }
 
         #command-input {
@@ -177,22 +136,39 @@
             flex-grow: 1;
             outline: none;
             caret-color: var(--accent);
-            text-shadow: 0 0 3px var(--highlight);
         }
 
-        .typing {
-            border-right: 2px solid var(--accent);
-            animation: blink 1s step-end infinite, pulse 1.5s infinite;
+        .navigation {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(42, 42, 42, 0.8);
+            padding: 10px 15px;
+            border-radius: 30px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            border: 1px solid var(--accent);
         }
 
-        @keyframes blink {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--accent); }
+        .nav-button {
+            color: var(--text);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: all 0.3s;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        .nav-button:hover {
+            background-color: var(--accent);
+            color: var(--terminal);
+            transform: translateY(-2px);
         }
 
         .portfolio-grid, .projects-grid {
@@ -211,6 +187,11 @@
                 width: 95%;
                 height: 85vh;
             }
+
+            .navigation {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
 
         .portfolio-item, .project-item {
@@ -219,12 +200,11 @@
             border-radius: 6px;
             border-left: 3px solid var(--accent);
             transition: all 0.3s ease;
-            transform-style: preserve-3d;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .portfolio-item:hover, .project-item:hover {
-            transform: translateY(-5px) rotateX(5deg);
+            transform: translateY(-5px);
             box-shadow: 0 15px 25px rgba(179, 153, 212, 0.2);
             background-color: rgba(42, 42, 42, 0.9);
             border-left: 3px solid var(--secondary);
@@ -247,7 +227,6 @@
             color: var(--secondary);
             text-decoration: none;
             transition: all 0.3s;
-            position: relative;
             padding: 5px 10px;
             border-radius: 4px;
             display: flex;
@@ -261,23 +240,6 @@
             text-shadow: 0 0 10px var(--highlight);
         }
 
-        .social-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: var(--secondary);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .social-links a:hover::after {
-            transform: scaleX(1);
-        }
-
-        /* Matrix rain effect */
         .matrix-rain {
             position: absolute;
             top: 0;
@@ -287,9 +249,36 @@
             z-index: -1;
             opacity: 0.1;
         }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .welcome-message h1 {
+            color: var(--accent);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-message p {
+            color: var(--text);
+            font-size: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
+    <div class="navigation">
+        <button class="nav-button" onclick="processCommand('about')">About</button>
+        <button class="nav-button" onclick="processCommand('portfolio')">Portfolio</button>
+        <button class="nav-button" onclick="processCommand('projects')">Projects</button>
+        <button class="nav-button" onclick="processCommand('skills')">Skills</button>
+        <button class="nav-button" onclick="processCommand('contact')">Contact</button>
+        <button class="nav-button" onclick="processCommand('ctf')">CTF</button>
+    </div>
+
     <div class="terminal">
         <div class="terminal-header">
             <div class="terminal-buttons">
@@ -297,7 +286,7 @@
                 <div class="terminal-button button-yellow"></div>
                 <div class="terminal-button button-green"></div>
             </div>
-            <div class="terminal-title">xeinyr@arch:~$ — zsh</div>
+            <div class="terminal-title">xeinyr@arch:~$ — portfolio</div>
         </div>
         <div class="terminal-body" id="terminal-output">
             <!-- Content will be added dynamically -->
@@ -311,56 +300,69 @@
         let commandHistory = [];
         let historyIndex = -1;
 
-        // Initial welcome message
-        addLine(`<span class="accent">╔════════════════════════════════════════════╗</span>`, 0);
-        addLine(`<span class="accent">║</span>  Welcome to <span class="secondary">Jasdeep Singh's</span> Cybersecurity Portfolio  <span class="accent">║</span>`, 100);
-        addLine(`<span class="accent">║</span>              <span class="secondary">aka Xeinyr</span>              <span class="accent">║</span>`, 200);
-        addLine(`<span class="accent">╚════════════════════════════════════════════╝</span>`, 300);
-        addLine(`Type <span class="secondary">'help'</span> to see available commands`, 500);
-        addInputLine(800);
+        // Initial welcome message with more user-friendly intro
+        function showWelcome() {
+            const welcomeContent = document.createElement('div');
+            welcomeContent.className = 'welcome-message';
+            welcomeContent.innerHTML = `
+                <h1>Welcome to Jasdeep Singh's Portfolio</h1>
+                <p>I'm a cybersecurity enthusiast also known as Xeinyr. Use the navigation buttons above or type commands below to explore my work.</p>
+                <p>Type <span class="secondary">'help'</span> in the terminal to see all available commands.</p>
+            `;
+            
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            line.appendChild(welcomeContent);
+            terminalOutput.appendChild(line);
+            
+            addInputLine(300);
+        }
+
+        // Show welcome message
+        showWelcome();
 
         // Matrix rain effect
-        const canvas = document.getElementById('matrix-rain');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const nums = '0123456789';
-        const symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
-        
-        const alphabet = katakana + latin + nums + symbols;
-        
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        
-        const rainDrops = [];
-        
-        for (let x = 0; x < columns; x++) {
-            rainDrops[x] = 1;
-        }
-        
-        const draw = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        setupMatrixRain();
+
+        function setupMatrixRain() {
+            const canvas = document.getElementById('matrix-rain');
+            const ctx = canvas.getContext('2d');
             
-            ctx.fillStyle = '#b399d4';
-            ctx.font = fontSize + 'px monospace';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
             
-            for (let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+            const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+            
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            
+            const rainDrops = Array(Math.floor(columns)).fill(1);
+            
+            const draw = () => {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    rainDrops[i] = 0;
+                ctx.fillStyle = '#b399d4';
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < rainDrops.length; i++) {
+                    const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                    
+                    if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        rainDrops[i] = 0;
+                    }
+                    rainDrops[i]++;
                 }
-                rainDrops[i]++;
-            }
-        };
-        
-        setInterval(draw, 30);
+            };
+            
+            setInterval(draw, 30);
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
 
         function addLine(text, delay = 0) {
             setTimeout(() => {
@@ -378,7 +380,7 @@
                 inputLine.className = 'input-line';
                 inputLine.innerHTML = `
                     <span class="input-prompt">➜</span>
-                    <input type="text" id="command-input" autofocus>
+                    <input type="text" id="command-input" autocomplete="off" autofocus>
                 `;
                 terminalOutput.appendChild(inputLine);
                 
@@ -395,22 +397,18 @@
                 const commandInput = e.target;
                 const command = commandInput.value.trim();
                 
-                // Add command to history
                 if (command) {
                     commandHistory.push(command);
                     historyIndex = commandHistory.length;
                 }
                 
-                // Display the command
                 const commandLine = document.createElement('div');
                 commandLine.className = 'terminal-line';
                 commandLine.innerHTML = `<span class="prompt">➜</span> <span class="command">${command}</span>`;
                 terminalOutput.insertBefore(commandLine, commandInput.parentNode);
                 
-                // Process the command
                 processCommand(command);
                 
-                // Remove the input line and add a new one
                 terminalOutput.removeChild(commandInput.parentNode);
                 addInputLine();
             } else if (e.key === 'ArrowUp') {
@@ -482,12 +480,18 @@
             addLine(`<span class="secondary">contact</span>    - How to contact me`);
             addLine(`<span class="secondary">matrix</span>     - Toggle matrix rain effect`);
             addLine(`<span class="secondary">clear</span>      - Clear the terminal`);
+            addLine(`<span class="secondary">Tip:</span> You can also use the navigation buttons at the top!`);
+        }
+
+        // Create a reusable function for section headers
+        function addSectionHeader(title) {
+            addLine(`<span class="accent">╔═══════════════════════════════════════╗</span>`);
+            addLine(`<span class="accent">║</span>            <span class="secondary">${title}</span>            <span class="accent">║</span>`);
+            addLine(`<span class="accent">╚═══════════════════════════════════════╝</span>`);
         }
 
         function showPortfolio() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>        <span class="secondary">Cybersecurity Portfolio</span>        <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('Cybersecurity Portfolio');
             addLine(`Here are some of my current focus areas and skills:`);
             
             const portfolioContent = document.createElement('div');
@@ -511,7 +515,7 @@
                 <div class="portfolio-item">
                     <h3>Certifications</h3>
                     <p>Building my knowledge through industry-recognized certifications.</p>
-                    <p><span class="secondary">Completed:</span> Google Cybersecurity Certificate, SC-900 (Microsoft Security Fundamentals)</p>
+                    <p><span class="secondary">Completed:</span> Google Cybersecurity Certificate, SC-900</p>
                 </div>
                 <div class="portfolio-item">
                     <h3>Video Editing</h3>
@@ -532,9 +536,7 @@
         }
 
         function showProjects() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>            <span class="secondary">My Projects</span>            <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('My Projects');
             addLine(`Here are some of my current and past projects:`);
             
             const projectsContent = document.createElement('div');
@@ -542,26 +544,23 @@
             projectsContent.innerHTML = `
                 <div class="project-item">
                     <h3>SecurePassVault</h3>
-                    <p>A beginner-friendly Python-based GUI Password Manager built with Tkinter. Ensures secure storage, retrieval, and encryption of passwords with robust access controls.</p>
+                    <p>A beginner-friendly Python-based GUI Password Manager built with Tkinter. Ensures secure storage, retrieval, and encryption of passwords.</p>
                     <p><span class="secondary">Tech Stack:</span> Python, Tkinter, Cryptography</p>
-                    <p><span class="secondary">Features:</span> Password encryption, User authentication, Intuitive UI</p>
                 </div>
                 <div class="project-item">
                     <h3>3D AMV Production</h3>
-                    <p>Creating animated music videos using After Effects and 3D elements. Combining motion graphics with audio synchronization for visually stunning videos.</p>
+                    <p>Creating animated music videos using After Effects and 3D elements. Combining motion graphics with audio synchronization.</p>
                     <p><span class="secondary">Tools:</span> After Effects, Element 3D, Cinema 4D</p>
-                    <p><span class="secondary">Example:</span> "3D AMV using After Effects and 3D elements"</p>
                 </div>
                 <div class="project-item">
                     <h3>Network Scanner Tool</h3>
                     <p>A Python-based tool for scanning local networks, identifying connected devices, and detecting potential vulnerabilities.</p>
                     <p><span class="secondary">Tech Stack:</span> Python, Scapy, Threading</p>
-                    <p><span class="secondary">Status:</span> In development</p>
                 </div>
                 <div class="project-item">
                     <h3>Arch Linux Custom Build</h3>
                     <p>Customized Arch Linux setup optimized for cybersecurity tasks with specialized tools and hardened security configurations.</p>
-                    <p><span class="secondary">Features:</span> Custom kernel parameters, Security-focused applications, Automated security checks</p>
+                    <p><span class="secondary">Features:</span> Custom kernel parameters, Security-focused applications</p>
                 </div>
             `;
             
@@ -572,19 +571,15 @@
         }
 
         function showAbout() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>            <span class="secondary">About Me</span>            <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('About Me');
             addLine(`I'm Jasdeep Singh, also known as Xeinyr in the cybersecurity community. I'm an ambitious and passionate cybersecurity student dedicated to building a strong foundation in security principles and practices.`);
-            addLine(`With a methodical approach to learning and a natural curiosity for how systems can be protected (and compromised), I'm developing my skills across various security domains including network security, programming for security, and practical hands-on challenges through CTF competitions.`);
-            addLine(`My goal is to grow into a well-rounded cybersecurity professional who can identify vulnerabilities, implement robust security solutions, and help organizations defend against evolving cyber threats.`);
+            addLine(`With a methodical approach to learning and a natural curiosity for how systems can be protected (and compromised), I'm developing my skills across various security domains.`);
+            addLine(`My goal is to grow into a well-rounded cybersecurity professional who can identify vulnerabilities, implement robust security solutions, and help organizations defend against cyber threats.`);
             addLine(`Beyond security, I'm also passionate about creative pursuits including video editing, creating 3D AMVs, and graphic design.`);
         }
 
         function showSkills() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>           <span class="secondary">Technical Skills</span>           <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('Technical Skills');
             addLine(`<span class="secondary">Networking:</span> Basic network security principles, TCP/IP fundamentals`);
             addLine(`<span class="secondary">Programming:</span> Python, C/C++, Java`);
             addLine(`<span class="secondary">Tools & Platforms:</span> Arch Linux, Kali Linux (learning), Wireshark, Basic penetration testing tools`);
@@ -594,30 +589,22 @@
         }
 
         function showCTF() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>            <span class="secondary">CTF Experience</span>            <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('CTF Experience');
             addLine(`Participating in Capture The Flag (CTF) competitions has been a valuable part of my cybersecurity journey:`);
             addLine(`• <span class="secondary">Competitions Entered:</span> 2`);
             addLine(`• <span class="secondary">Wins:</span> 1`);
             addLine(`• <span class="secondary">Favorite Categories:</span> Network Security, Cryptography, Web Security`);
             addLine(`• <span class="secondary">Key Skills Developed:</span> Problem solving under pressure, creative thinking, technical application of security concepts`);
-            addLine(`CTF competitions have been instrumental in applying theoretical knowledge to practical scenarios and identifying areas for further skill development.`);
         }
 
         function showOS() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>            <span class="secondary">Operating System</span>            <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('Operating System');
             addLine(`I use <span class="accent">Arch Linux</span> as my primary operating system.`);
             addLine(`<span class="secondary">Why Arch?</span> Its minimalist approach gives me complete control over my system and helps me better understand the fundamentals of Linux. This knowledge is invaluable in cybersecurity where understanding system internals is critical.`);
-            addLine(`The rolling release model keeps me up-to-date with the latest security patches and tools, which is essential in the ever-evolving cybersecurity landscape.`);
         }
 
         function showContact() {
-            addLine(`<span class="accent">╔════════════════════════════════════╗</span>`);
-            addLine(`<span class="accent">║</span>          <span class="secondary">Contact Information</span>          <span class="accent">║</span>`);
-            addLine(`<span class="accent">╚════════════════════════════════════╝</span>`);
+            addSectionHeader('Contact Information');
             addLine(`You can reach me through the following channels:`);
             
             const contactContent = document.createElement('div');
@@ -647,14 +634,8 @@
             while (terminalOutput.firstChild) {
                 terminalOutput.removeChild(terminalOutput.firstChild);
             }
-            addInputLine();
+            showWelcome();
         }
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
 
         // Make terminal responsive
         function adjustTerminalSize() {
